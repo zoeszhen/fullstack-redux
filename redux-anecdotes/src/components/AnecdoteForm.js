@@ -1,9 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
 
-const AnecdoteCreator = (props) => {
+const AnecdoteForm = (props) => {
     const dispatch = useDispatch()
 
     const addAnecdote = (event) => {
@@ -26,4 +25,4 @@ const AnecdoteCreator = (props) => {
     )
 }
 
-export default AnecdoteCreator;
+export default AnecdoteForm;
