@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { incrementVote, initAnecdote } from '../reducers/anecdoteReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import Notification from "./Notification"
-import noteService from '../service/anecdotes'
 
 const AnecdoteCreator = (props) => {
     const anecdotes = useSelector(state => state.anecdote)
@@ -13,8 +13,10 @@ const AnecdoteCreator = (props) => {
         dispatch(initAnecdote())
     }, [dispatch])
 
-    const vote = (id) => {
+    const vote = (anecdote) => {
+        const { id, content } = anecdote;
         dispatch(incrementVote(id))
+        dispatch(setNotification(`you voted '${content}'`, 10))
     }
     return (
         <>
@@ -29,7 +31,7 @@ const AnecdoteCreator = (props) => {
                             </div>
                             <div>
                                 has {anecdote.votes}
-                                <button onClick={() => vote(anecdote.id)}>vote</button>
+                                <button onClick={() => vote(anecdote)}>vote</button>
                             </div>
                         </div>
                     )
