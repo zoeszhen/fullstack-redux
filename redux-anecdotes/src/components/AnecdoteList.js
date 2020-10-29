@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { incrementVote, initAnecdote } from '../reducers/anecdoteReducer'
 import Notification from "./Notification"
@@ -8,18 +8,17 @@ const AnecdoteCreator = (props) => {
     const anecdotes = useSelector(state => state.anecdote)
     const filter = useSelector(state => state.filter)
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
-        noteService
-          .getAll().then(anecdote => dispatch(initAnecdote(anecdote)))
-      }, [])
-    
+        dispatch(initAnecdote())
+    }, [dispatch])
+
     const vote = (id) => {
         dispatch(incrementVote(id))
     }
     return (
         <>
-         <Notification></Notification>
+            <Notification></Notification>
             {
                 anecdotes
                     .filter(anecdote => anecdote.content.includes(filter))
