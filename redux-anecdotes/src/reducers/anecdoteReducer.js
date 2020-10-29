@@ -1,3 +1,4 @@
+import { getAll} from "../service/anecdotes"
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -19,7 +20,7 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = [], action) => {
   console.log(action)
   switch (action.type) {
     case 'VOTE':
@@ -28,6 +29,8 @@ const reducer = (state = initialState, action) => {
         .sort((a, b) => b.votes - a.votes)
     case 'NEW_ANECDOTE':
       return [...state, action.data]
+    case 'INIT_ANECDOTE':
+      return action.data
     default: return state
   }
 }
@@ -47,6 +50,12 @@ export const createAnecdote = (content) => {
       votes: 0,
       id: getId()
     }
+  }
+}
+export const initAnecdote = (anecdoteList) => {
+  return {
+    type: 'INIT_ANECDOTE',
+    data: anecdoteList
   }
 }
 export default reducer
