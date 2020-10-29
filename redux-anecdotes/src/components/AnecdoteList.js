@@ -5,7 +5,7 @@ import { setNotification } from '../reducers/notificationReducer'
 import Notification from "./Notification"
 
 const AnecdoteList = (props) => {
-    const { filter, anecdotes, incrementVote, setNotification, initAnecdote } = props;
+    const { filter, anecdotes, incrementVote, setNotification, initAnecdote, notification } = props;
 
     useEffect(() => {
         initAnecdote()
@@ -14,7 +14,7 @@ const AnecdoteList = (props) => {
     const vote = (anecdote) => {
         const { id, content } = anecdote;
         incrementVote(id)
-        setNotification(`You voted for ${content}`, 10)
+        setNotification(`You voted for ${content}`, 5, notification ? notification.timerId : undefined)
     }
     return (
         <>
@@ -41,7 +41,8 @@ const AnecdoteList = (props) => {
 const mapStateToProps = (state) => {
     return {
         anecdotes: state.anecdote,
-        filter: state.filter
+        filter: state.filter,
+        notification: state.notification
     }
 }
 

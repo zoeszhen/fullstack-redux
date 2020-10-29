@@ -4,14 +4,14 @@ import { createAnecdote } from '../reducers/anecdoteReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
 const AnecdoteForm = (props) => {
-    const { setNotification, createAnecdote } = props
+    const { setNotification, createAnecdote, notification } = props
 
     const addAnecdote = async (event) => {
         event.preventDefault()
         const content = event.target.anecdote.value
         event.target.anecdote.value = ""
         createAnecdote(content)
-        setNotification(`you create a new anecdote'`, 10)
+        setNotification(`you create a new anecdote'`, 10, notification ? notification.timerId : undefined)
     }
 
     return (
@@ -25,6 +25,12 @@ const AnecdoteForm = (props) => {
             </form>
         </div>
     )
+}
+
+const mapStateToProps = (state) => {
+    return {
+        notification: state.notification
+    }
 }
 
 const mapDispatchToProps = { createAnecdote, setNotification }
